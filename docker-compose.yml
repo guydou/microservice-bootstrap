@@ -4,6 +4,10 @@ services:
     build: user_service
     volumes:
      - ./user_service:/usr/src/app
+    links:
+     - user_storage
+  user_storage:
+    image: mongo
   reverse_proxy:
     image: nginx
     ports:
