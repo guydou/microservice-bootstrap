@@ -2,7 +2,14 @@ version: '2'
 services:
   user_service:
     build: user_service
-    ports:
-     - "8000:3000"
     volumes:
      - ./user_service:/usr/src/app
+  reverse_proxy:
+    image: nginx
+    ports:
+     - "80:80"
+    volumes:
+     - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+     - ./nginx/logs:/etc/nginx/logs
+    links:
+     - user_service
