@@ -6,6 +6,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
+var passport = require('passport');
+var session = require('express-session');
+var mongoose = require('mongoose');
+
+// *** mongoose *** //
+mongoose.connect('mongodb://user_storage/passport-social-auth');
+
+
+var passportConfig = require('./config/passport.js')
+
 
 
 var app = express();
@@ -24,7 +34,7 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+app.use('/users_service', routes);
 
 
 // catch 404 and forward to error handler
@@ -57,6 +67,15 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 module.exports = app;
