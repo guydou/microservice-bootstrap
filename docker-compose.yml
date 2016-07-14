@@ -13,7 +13,7 @@ services:
     volumes:
      - ./website:/usr/src/app
     links:
-     - user_storage
+     - user_service
 
   reverse_proxy:
     image: nginx
