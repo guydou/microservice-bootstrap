@@ -1,13 +1,20 @@
 version: '2'
 services:
+  user_storage:
+    image: mongo
   user_service:
     build: user_service
     volumes:
      - ./user_service:/usr/src/app
     links:
      - user_storage
-  user_storage:
-    image: mongo
+  website:
+    build: website
+    volumes:
+     - ./website:/usr/src/app
+    links:
+     - user_storage
+
   reverse_proxy:
     image: nginx
     ports:
@@ -17,3 +24,4 @@ services:
      - ./nginx/logs:/etc/nginx/logs
     links:
      - user_service
+     - website
