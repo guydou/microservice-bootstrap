@@ -1,7 +1,31 @@
-doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+
+extends ../node_modules/jade-bootstrap/_bootstrap
+
+append styles
+	// Custom styles for this template
+	link(href='static/stylesheets/style.css', rel='stylesheet')
+
+
+
+append body
+	.container
+		+navbar("Project name","dropdown_menu")
+			+nav_item("index.html","active") Home
+			+nav_item("about.html") About
+			+nav_item("contact.html") Contact
+			+nav_item_dropdown("#")(label="Dropdown")
+				+nav_item("#") Action
+				+nav_item("#") Another Action
+				+nav_item("#") Something else here
+				+nav_divider
+				+nav_header Nav header
+				+nav_item("#") Separated link
+				+nav_item("#") One more separated link
+		include sidebar.jade
+		span.btn
+			button(type='button',class="btn btn-primary",id="login_btn") login via facebook
+
+
+				
+					
+h1 Rajasegar
