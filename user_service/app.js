@@ -9,9 +9,16 @@ var routes = require('./routes/index');
 var passport = require('passport');
 var session = require('express-session');
 var mongoose = require('mongoose');
+var tcpPortUsed = require('tcp-port-used');
 
 // *** mongoose *** //
-mongoose.connect('mongodb://user_storage/passport-social-auth');
+tcpPortUsed.waitUntilUsedOnHost(27017, 'user_storage', 500, 4000)
+  .then(function() {
+    mongoose.connect('mongodb://user_storage/passport-social-auth');
+  }, function(err) {
+    console.log('Error:', err.message);
+  });
+
 
 
 var passportConfig = require('./config/passport.js')
